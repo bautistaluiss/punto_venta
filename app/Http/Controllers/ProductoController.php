@@ -37,6 +37,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
 
+      session()->flash('message', 'created');
       $this->validate($request,[
           //los nombres son los de los name de las inputs de la vista.
         'nombre' => 'required|regex:/^[A-Z0-9,.,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,100',
@@ -89,6 +90,8 @@ class ProductoController extends Controller
      */
     public function update(Request $request)
     {
+
+      session()->flash('message', 'updated');
       $this->validate($request,[
           //los nombres son los de los name de las inputs de la vista.
         'nombre' => 'required|regex:/^[A-Z0-9,.,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,100',
@@ -98,7 +101,7 @@ class ProductoController extends Controller
         'cantidad' => 'required|numeric'
         //'idd' => 'required|numeric'
         ]);
-        
+
         $producto= Producto::findOrFail($request->id);
         $producto->update($request->all());
        return redirect('/productos');

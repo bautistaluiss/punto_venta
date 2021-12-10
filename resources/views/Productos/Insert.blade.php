@@ -149,11 +149,18 @@
 @section('Scripts')
 <script src="{{asset('Scripts/Productos/producto-1.0.js')}}"></script>
 
-@if($errors->any())
+{{-- show modal errors --}}
+@if(session('message') === 'updated' && $errors->any())
+    <script>
+        $('#modalUpdate').modal('show');
+    </script>
+    @elseif(session('message') === 'created' && $errors->any())
     <script>
         $('#modalInsert').modal('show');
     </script>
     @endif
+<? } ?>
+{{-- end modal errors --}}
 
-  
+
 @endsection
