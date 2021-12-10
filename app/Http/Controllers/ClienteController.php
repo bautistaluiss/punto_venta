@@ -36,6 +36,14 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
 
+      session()->flash('message', 'created');
+      $this->validate($request,[
+          //los nombres son los de los name de las inputs de la vista.
+        'nombre' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,30',
+        'primer_apellido' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,25',
+        'segundo_apellido' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,25',
+        ]);
+
         $cliente= new Cliente();
         $cliente->nombre=$request->nombre;
         $cliente->primer_apellido=$request->primer_apellido;
@@ -75,6 +83,14 @@ class ClienteController extends Controller
      */
     public function update(Request $request)
     {
+      session()->flash('message', 'updated');
+      $this->validate($request,[
+          //los nombres son los de los name de las inputs de la vista.
+        'nombre' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,30',
+        'primer_apellido' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,25',
+        'segundo_apellido' => 'required|regex:/^[A-Z,a-z, ,á,é,í,ó,ú,ü,ñ,Ñ]+$/|between:3,25',
+        ]);
+
         $Cliente= Cliente::findOrFail($request->id);
         $Cliente->update($request->all());
        return redirect('/clientes');

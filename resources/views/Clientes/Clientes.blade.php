@@ -48,12 +48,22 @@
         </div>
         <div class="modal-body">
                 <label for="nombre">Nombre cliente:</label>
-                <input type="text" class="form-control" placeholder="Edgar" id="nombre" name="nombre" required>
+                <input type="text" class="form-control" placeholder="Edgar" id="nombre" name="nombre" value="{{old('nombre')}}">
+                @if($errors->first('nombre'))
+                    <p class="text-danger">{{$errors->first('nombre')}}</p>
+                @endif
+
                 <label for="primer_apellido"> Apellido Paterno:</label>
-                <input type="text" class="form-control" placeholder="Carrera"  id="primer_apellido" name="primer_apellido" required>
+                <input type="text" class="form-control" placeholder="Carrera"  id="primer_apellido" name="primer_apellido" value="{{old('primer_apellido')}}">
+                @if($errors->first('primer_apellido'))
+                    <p class="text-danger">{{$errors->first('primer_apellido')}}</p>
+                @endif
+
                 <label for="segundo_apellido"> Apellido:</label>
-                <input type="text" class="form-control" placeholder="Carrasco
-                " id="segundo_apellido" name="segundo_apellido" required>
+                <input type="text" class="form-control" placeholder="Carrasco" id="segundo_apellido" name="segundo_apellido" value="{{old('segundo_apellido')}}">
+                @if($errors->first('segundo_apellido'))
+                    <p class="text-danger">{{$errors->first('segundo_apellido')}}</p>
+                @endif
 
 
         </div>
@@ -78,11 +88,22 @@
         <div class="modal-body">
             <input type="hidden" name="id" id="id">
             <label for="nombre">Nombre cliente:</label>
-            <input type="text" class="form-control" placeholder="Coca Cola" id="nombre" name="nombre" required>
+            <input type="text" class="form-control" placeholder="Coca Cola" id="nombre" name="nombre" value="{{old('nombre')}}">
+            @if($errors->first('nombre'))
+                <p class="text-danger">{{$errors->first('nombre')}}</p>
+            @endif
+
             <label for="primer_apellido"> Apellido Paterno:</label>
-            <input type="text" class="form-control"  id="primer_apellido" name="primer_apellido" required>
-            <label for="segundo_apellido"> Apellido:</label>
-            <input type="text" class="form-control"  id="segundo_apellido" name="segundo_apellido" required>
+            <input type="text" class="form-control"  id="primer_apellido" name="primer_apellido" value="{{old('primer_apellido')}}">
+            @if($errors->first('primer_apellido'))
+                <p class="text-danger">{{$errors->first('primer_apellido')}}</p>
+            @endif
+
+            <label for="segundo_apellido"> Apellido Materno:</label>
+            <input type="text" class="form-control"  id="segundo_apellido" name="segundo_apellido"value="{{old('segundo_apellido')}}">
+            @if($errors->first('segundo_apellido'))
+                <p class="text-danger">{{$errors->first('segundo_apellido')}}</p>
+            @endif
 
 
             </div>
@@ -100,4 +121,18 @@
   @endsection
 @section('Scripts')
 <script src="{{asset('Scripts/Cliente/cliente-1.0.js')}}"></script>
+
+{{-- show modal errors --}}
+@if(session('message') === 'updated' && $errors->any())
+    <script>
+        $('#modalUpdate').modal('show');
+    </script>
+    @elseif(session('message') === 'created' && $errors->any())
+    <script>
+        $('#modalInsert').modal('show');
+    </script>
+    @endif
+<? } ?>
+{{-- end modal errors --}}
+
 @endsection
