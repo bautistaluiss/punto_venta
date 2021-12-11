@@ -19,6 +19,9 @@
     <button type="submit" class="btn btn-sm btn-primary mx-1 mb-2">Agregar</button>
   </form>
 </div>
+@if($errors->first('producto'))
+    <p class="text-danger" align="right">{{$errors->first('producto')}}</p>
+@endif
 <div class="table-responsive mt-2">
     <table class="table" id="tb-productos">
       <thead>

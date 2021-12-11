@@ -39,13 +39,22 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        $now = date('Y-m-d H:i');
-        $pedido= new Pedido();
-        $pedido->fechapedido=$now;
-        $pedido->estadopedido='Pendiente';
-        $pedido->cliente_id=$request->id;
-        $pedido->fechaenvio=null;
-        $pedido->vendedor_id=session('user')->id;
+      //los nombres son los de los name de las inputs de la vista.
+        $this->validate($request,[
+      'fechaenvio' => 'required|date'
+
+      ]);
+
+      $now = date('Y-m-d H:i');
+      $pedido= new Pedido();
+      $pedido->fechapedido=$now;
+      $pedido->estadopedido='Pendiente';
+      $pedido->cliente_id=$request->id;
+      //dd($request->);
+      $pedido->fechaenvio=$request->fechaenvio;
+      //$pedido->fechaenvio=null;
+      $pedido->vendedor_id=session('user')->id;
+      //dd($pedido);
      $pedido->save();
      return redirect('/pedidos/'.session('cliente')->id);
     }
@@ -114,6 +123,12 @@ class PedidoController extends Controller
         return view("Pedidos.detalle",['pedido'=>$pedido,'id'=>$id,"productos"=>$pedido->Producto,"allProductos"=>$productos]);
     }
     public function AddProduct(Request $request){
+
+        $this->validate($request,[
+        'producto' => 'required'
+
+        ]);
+
         $pedidoProducto = new PedidoProducto();
 
         $pedidoProducto->producto_id = $request->producto;
@@ -123,8 +138,8 @@ class PedidoController extends Controller
     }
     public function RemoveProducto(Request $request){
        PedidoProducto::where('pedido_id',"=",$request->pedido)->where('producto_id',"=",$request->producto)->delete();
-       
+
         return redirect('/detallePedido/'.$request->pedido);
-    }       
+    }
 
 }
